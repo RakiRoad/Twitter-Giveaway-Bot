@@ -19,18 +19,21 @@ api = tweepy.API(auth)
 def search_func(value):
 	search_results = api.search(q=value, count=10)
 
-	outtweets_id = [[result.id, result.entities] for result in search_results]
+	outtweets_id = [[result.id, result.entities, result.user.screen_name, result.retweet] for result in search_results]
 	#outtweets_id = [search_results.id]
 	length = len(outtweets_id)
-
-	for b in range (0, length):
-		super_user = outtweets_id[]
 
 	for i in range (0, length):
 			#api.retweet(outtweets_id[i])
 		try:	
 			api.retweet(outtweets_id[i][0])
-			api.create_friendship(outtweets_id[i][1])
+
+			if outtweets_id[i][3] == True:
+				api.create_friendship(outtweets_id[i][2])
+			else:
+				#wont work because it is no longer an object
+				api.create_friendship(outtweets_id[i][1].user_mentions.screen_name)
+
 		except Exception:
 			pass
 		"""try:
