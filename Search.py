@@ -13,3 +13,17 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth)
 
+def search_func(value):
+	results = api.search(q=value)
+	#for result in results:
+		#print (result)
+	outtweets = [[result.text.encode("utf-8")] for result in results]
+
+    # write the csv
+	with open('%s_tweets.csv' % value, 'w') as f:
+		writer = csv.writer(f)
+		writer.writerow(["text"])
+		writer.writerows(outtweets)
+	pass
+
+search_func("giveaway")
