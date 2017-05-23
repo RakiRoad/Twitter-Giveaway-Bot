@@ -61,5 +61,12 @@ def get_all_tweets(screen_name):
 
 #if __name__ == '__main__':
     # pass in the username of the account you want to download
-get_all_tweets("Imaqtpielol")
+"""    
+listnames = ["Imaqtpielol", "TSMDoublelift", "MonteCristo", "ggDoa"]
+x = len(listnames)
 
+for i in range(0, x):
+	get_all_tweets(i)
+"""
+
+get_all_tweets("Imaqtpielol")
