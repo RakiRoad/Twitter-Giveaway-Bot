@@ -10,7 +10,6 @@ access_key = "867029806944309254-Au0d3L1PpESXyyVSjGrqWBUdPOJspIC"
 access_secret = "KRV42V1w9gHBlI4gxMSMtCEVZIp8CFpIG3HmKYT88P7FF"
 
 
-"""
 def get_all_tweets(screen_name):
     # Twitter only allows access to a users most recent 3240 tweets with this method
 
@@ -64,4 +63,3 @@ if __name__ == '__main__':
     # pass in the username of the account you want to download
     get_all_tweets("Imaqtpielol")
 
-"""
