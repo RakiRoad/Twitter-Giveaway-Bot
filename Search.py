@@ -17,15 +17,22 @@ api = tweepy.API(auth)
 
 #utilizes search to look for giveaways and retweets found results
 def search_func(value):
-	search_results = api.search(q=value, count=200)
+	search_results = api.search(q=value, count=10)
 
-	outtweets_id = [[result.id] for result in search_results]
+	outtweets_id = [result.id for result in search_results]
 	#outtweets_id = [search_results.id]
 	length = len(outtweets_id)
 	#print (outtweets_id)
 
 	for i in range (0, length):
-			api.retweet(outtweets_id[i][0])
+			#api.retweet(outtweets_id[i])
+			if 'FOLLOW' in (search_results[i].text.upper()):
+				print("found 'follow' in " + search_results[i].user.screen_name)
+			
+			try:
+				api.retweet(outtweets_id[i])
+			except Exception:
+				pass
 
 
 """
