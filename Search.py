@@ -15,6 +15,38 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth)
 
+#////////////////////////////////////////////////////////////////
+def search_func(value):
+	search_results = api.search(q=value, count=10)
+
+	outtweets_id = [[result.id, result.entities] for result in search_results]
+	#outtweets_id = [search_results.id]
+	length = len(outtweets_id)
+
+	for b in range (0, length):
+		super_user = outtweets_id[]
+
+	for i in range (0, length):
+			#api.retweet(outtweets_id[i])
+		try:	
+			api.retweet(outtweets_id[i][0])
+			api.create_friendship(outtweets_id[i][1])
+		except Exception:
+			pass
+		"""try:
+				api.retweet(outtweets_id[i][0])
+				api.follow(outtweets_id[i][1])
+				
+
+				#if 'FOLLOW' in (search_results[i].text.upper()):
+					#print("found 'follow' in " + search_results[i].user.screen_name)
+			except Exception:
+				pass """
+#////////////////////////////////////////////////////////////////
+
+""" BLOCK COMMENT STARTS HERE
+
+#           ----------------ORIGINAL----------------
 #utilizes search to look for giveaways and retweets found results
 def search_func(value):
 	search_results = api.search(q=value, count=10)
@@ -26,13 +58,14 @@ def search_func(value):
 
 	for i in range (0, length):
 			#api.retweet(outtweets_id[i])
-			if 'FOLLOW' in (search_results[i].text.upper()):
-				print("found 'follow' in " + search_results[i].user.screen_name)
 			
 			try:
 				api.retweet(outtweets_id[i])
+				if 'FOLLOW' in (search_results[i].text.upper()):
+					print("found 'follow' in " + search_results[i].user.screen_name)
 			except Exception:
 				pass
+BLOCK COMMENT ENDS HERE """
 
 
 """
