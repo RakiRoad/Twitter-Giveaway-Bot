@@ -2,7 +2,7 @@
 import tweepy
 
 #probably do not need this
-import csv 
+import csv
 
 #Twitter API information
 consumer_key = "gsD8iFLqvQDdg22OFAHIhcIx9"
@@ -19,29 +19,26 @@ api = tweepy.API(auth)
 def search_func(value):
 	search_results = api.search(q=value, count=10)
 
-	outtweets_id = [[result.id, result.entities, result.user.screen_name, result.retweet] for result in search_results]
+	outtweets_id = [[result.id, result.entities] for result in search_results]
+	#x_var = [[verification.id] for verification in outtweets_id[i][1]]
 	#outtweets_id = [search_results.id]
 	length = len(outtweets_id)
 
 	for i in range (0, length):
 			#api.retweet(outtweets_id[i])
-		try:	
-			
 
-			if outtweets_id[i][3] == False:
-				api.create_friendship(outtweets_id[i][2])
-				api.retweet(outtweets_id[i][0])
-			else:
-				#wont work because it is no longer an object
-				api.create_friendship(outtweets_id[i][1].user_mentions.screen_name)
-				api.retweet(outtweets_id[i][0])
+		try:
+
+			print(outtweets_id[i][1])
+			#api.retweet(outtweets_id[i][0])
+			#api.create_friendship(x_var[i])
 
 		except Exception:
 			pass
 		"""try:
 				api.retweet(outtweets_id[i][0])
 				api.follow(outtweets_id[i][1])
-				
+
 
 				#if 'FOLLOW' in (search_results[i].text.upper()):
 					#print("found 'follow' in " + search_results[i].user.screen_name)
@@ -63,7 +60,7 @@ def search_func(value):
 
 	for i in range (0, length):
 			#api.retweet(outtweets_id[i])
-			
+
 			try:
 				api.retweet(outtweets_id[i])
 				if 'FOLLOW' in (search_results[i].text.upper()):
@@ -88,5 +85,5 @@ Twitter account information
 	Password: Rockyisgod28
 """
 
-#The Parameter it searches for 
+#The Parameter it searches for
 search_func("giveaway retweet")

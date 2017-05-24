@@ -1,5 +1,6 @@
+#import libraries
 import tweepy
-import csv
+
 
 #Twitter API information
 consumer_key = "gsD8iFLqvQDdg22OFAHIhcIx9"
@@ -13,7 +14,8 @@ auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth)
 
 def search_func(value):
-    search_results = api.search(q=value, count=10)
+
+    search_results = api.search(q=value, count=5)
 
     outtweets_id = [result.id for result in search_results]
 
@@ -40,6 +42,64 @@ def search_func(value):
         #in 'follow' i.e. 'follllllowww'
         if 'FOLLOW' in (search_results[i].text.upper()):
             api.create_friendship(tweet_users[i].id)
-            
 
-search_func("giveaway retweet")
+#///////////////////////////////////////////////////////////
+# Method to unfollow and delete tweets
+#///////////////////////////////////////////////////////////
+
+def undo_func():
+
+	#Finds the owner's id
+	me_user = api.me()
+	me_id = me_user.id
+
+	print (me_id)
+	print ("\n")
+
+	#finds the ids of followings
+	following_list = api.friends_ids(me_id)
+	print (following_list)
+	print ("\n")
+	length_follow = len(following_list)
+
+	#gets the id's of tweets and retweets in user timeline
+	#big issue is that it only returns 20 most recent
+	#also retweets need to be in user timeline to work
+
+	me_tweet = api.home_timeline(me_id)
+	me_tweet_id = [tweet.id for tweet in me_tweet]
+	length_tweet = len(me_tweet_id)
+
+	print (me_tweet_id)
+	print ("\n")
+
+	#iterates through the list of followings and deletes it
+	for i in range(0, length_follow):
+
+		api.destroy_friendship(following_list[i])
+		#print ("Deleting " + str(following_list[i]))
+
+	for j in range(0, length_tweet):
+
+		api.destroy_status(me_tweet_id[j])
+		#print ("Deleting " + str(me_tweet_id[j]))
+
+
+"""
+Major Issues:
+	-Runs into errors when it tries to retweet duplicate tweets
+		a conditional statement needs to be added to fix this
+
+Features to be implemented:
+	-We need to make the program keep searching for new giveaways so far only runs a single instance
+	-Add functionality so program automatically retweets, follows, favorite tweet for giveaway
+		-Does retweeting
+		-Does Following
+
+Twitter account information
+	Email: redditfreebies28@gmail.com
+	Password: Rockyisgod28
+"""
+
+#search_func("giveaway retweet")
+undo_func()
