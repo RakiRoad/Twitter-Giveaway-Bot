@@ -1,5 +1,7 @@
 #import libraries
 import tweepy
+import csv
+import threading
 
 
 #Twitter API information
@@ -13,9 +15,9 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth)
 
-def search_func(value):
 
-    search_results = api.search(q=value, count=5)
+def search_func(value, numTweets):
+    search_results = api.search(q=value, count=numTweets)
 
     outtweets_id = [result.id for result in search_results]
 
@@ -42,6 +44,7 @@ def search_func(value):
         #in 'follow' i.e. 'follllllowww'
         if 'FOLLOW' in (search_results[i].text.upper()):
             api.create_friendship(tweet_users[i].id)
+
 
 #///////////////////////////////////////////////////////////
 # Method to unfollow and delete tweets
@@ -103,3 +106,31 @@ Twitter account information
 
 #search_func("giveaway retweet")
 undo_func()
+
+
+#//////-Steve's Code-//////
+        #if 'like' is in the tweet, like that tweet, of course fails if
+        #the word 'like' is there for other reasons or the tweet uses more letters
+        #in 'like' i.e. 'liiiikee'
+        if 'LIKE' in (search_results[i].text.upper()):
+            api.create_favorite(outtweets_id[i])
+
+
+# def runSearchOnIntervalMinutes(query, minutes):
+#     seconds = minutes * 60.0
+#     threading.Timer(seconds, search_func).start()
+
+# def runSearchOnIntervalSeconds(query, seconds):
+#     threading.Timer(seconds, search_func).start()
+
+''' 
+random idea
+
+try to handle situation where tweets say "like: youtube.com/fdaf":
+    if link contains 'youtube' or shortened version, go to youtube with account credentials and like (use youtube api/lib)
+
+'''
+
+
+search_func("giveaway retweet", 10)
+
