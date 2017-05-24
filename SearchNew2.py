@@ -45,6 +45,21 @@ def search_func(value, numTweets):
         if 'FOLLOW' in (search_results[i].text.upper()):
             api.create_friendship(tweet_users[i].id)
 
+		#if 'like' is in the tweet, like that tweet, of course fails if
+        #the word 'like' is there for other reasons or the tweet uses more letters
+        #in 'like' i.e. 'liiiikee'
+        if 'LIKE' in (search_results[i].text.upper()) or 'FAVORITE' in (search_results[i].text.upper()):
+            api.create_favorite(outtweets_id[i])
+
+
+# def runSearchOnIntervalMinutes(query, minutes):
+#     seconds = minutes * 60.0
+#     threading.Timer(seconds, search_func).start()
+
+# def runSearchOnIntervalSeconds(query, seconds):
+#     threading.Timer(seconds, search_func).start()
+
+
 
 #///////////////////////////////////////////////////////////
 # Method to unfollow and delete tweets
@@ -90,8 +105,6 @@ def undo_func():
 
 """
 Major Issues:
-	-Runs into errors when it tries to retweet duplicate tweets
-		a conditional statement needs to be added to fix this
 
 Features to be implemented:
 	-We need to make the program keep searching for new giveaways so far only runs a single instance
@@ -107,21 +120,6 @@ Twitter account information
 #search_func("giveaway retweet")
 undo_func()
 
-
-#//////-Steve's Code-//////
-        #if 'like' is in the tweet, like that tweet, of course fails if
-        #the word 'like' is there for other reasons or the tweet uses more letters
-        #in 'like' i.e. 'liiiikee'
-        if 'LIKE' in (search_results[i].text.upper()):
-            api.create_favorite(outtweets_id[i])
-
-
-# def runSearchOnIntervalMinutes(query, minutes):
-#     seconds = minutes * 60.0
-#     threading.Timer(seconds, search_func).start()
-
-# def runSearchOnIntervalSeconds(query, seconds):
-#     threading.Timer(seconds, search_func).start()
 
 ''' 
 random idea
