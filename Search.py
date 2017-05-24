@@ -26,13 +26,15 @@ def search_func(value):
 	for i in range (0, length):
 			#api.retweet(outtweets_id[i])
 		try:	
-			api.retweet(outtweets_id[i][0])
+			
 
-			if outtweets_id[i][3] == True:
+			if outtweets_id[i][3] == False:
 				api.create_friendship(outtweets_id[i][2])
+				api.retweet(outtweets_id[i][0])
 			else:
 				#wont work because it is no longer an object
 				api.create_friendship(outtweets_id[i][1].user_mentions.screen_name)
+				api.retweet(outtweets_id[i][0])
 
 		except Exception:
 			pass
