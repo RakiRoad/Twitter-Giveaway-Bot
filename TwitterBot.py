@@ -1,3 +1,8 @@
+#=============================================================================
+#   Twitter Bot that automatically enters user to giveaways
+#   Created By: Ralph Quinto and Steve Mattia
+#   Version: 1.0
+#=============================================================================
 #import libraries
 import tweepy
 import csv
@@ -35,21 +40,27 @@ def search_func(value, numTweets):
             tweet_users.append(search_results[i].user)
         try:
             api.retweet(outtweets_id[i])                #retweet the tweet
-            print(tweet_users[i].screen_name)
+            #print(tweet_users[i].screen_name)
         except Exception:
             pass
-        
+
         #if 'follow' is in the tweet, follow that user, of course fails if
         #the word 'follow' is there for other reasons or the tweet uses more letters
         #in 'follow' i.e. 'follllllowww'
         if 'FOLLOW' in (search_results[i].text.upper()):
-            api.create_friendship(tweet_users[i].id)
+            try:
+                api.create_friendship(tweet_users[i].id)
+            except Exception:
+                pass
 
 		#if 'like' is in the tweet, like that tweet, of course fails if
         #the word 'like' is there for other reasons or the tweet uses more letters
         #in 'like' i.e. 'liiiikee'
         if 'LIKE' in (search_results[i].text.upper()) or 'FAVORITE' in (search_results[i].text.upper()):
-            api.create_favorite(outtweets_id[i])
+            try:
+                api.create_favorite(outtweets_id[i])
+            except Exception:
+                pass
 
 
 # def runSearchOnIntervalMinutes(query, minutes):
@@ -67,42 +78,39 @@ def search_func(value, numTweets):
 
 def undo_func():
 
-	#Finds the owner's id
-	me_user = api.me()
-	me_id = me_user.id
+    #Finds the owner's id
+    me_user = api.me()
+    me_id = me_user.id
 
-	print (me_id)
-	print ("\n")
+    #print (me_id)
+    #print ("\n")
 
-	#finds the ids of followings
-	following_list = api.friends_ids(me_id)
-	print (following_list)
-	print ("\n")
-	length_follow = len(following_list)
+    #finds the ids of followings
+    following_list = api.friends_ids(me_id)
+    #print (following_list)
+    #print ("\n")
+    length_follow = len(following_list)
 
-	#gets the id's of tweets and retweets in user timeline
-	#big issue is that it only returns 20 most recent
-	#also retweets need to be in user timeline to work
+    #iterates through the list of followings and deletes it
+    for i in range(0, length_follow):
+        api.destroy_friendship(following_list[i])
+        #print ("Deleting " + str(following_list[i]))
 
-	me_tweet = api.home_timeline(me_id)
-	me_tweet_id = [tweet.id for tweet in me_tweet]
-	length_tweet = len(me_tweet_id)
+    #Deletes all of the retweets and unlikes them
+    for retweets in tweepy.Cursor(api.user_timeline).items():
+        try:
+            api.destroy_status(retweets.id)
+            #print ("Deleted:"), retweets.id
+        except:
+            print ("Failed to delete:"), retweets.id
 
-	print (me_tweet_id)
-	print ("\n")
-
-	#iterates through the list of followings and deletes it
-	for i in range(0, length_follow):
-
-		api.destroy_friendship(following_list[i])
-		#print ("Deleting " + str(following_list[i]))
-
-	for j in range(0, length_tweet):
-
-		api.destroy_status(me_tweet_id[j])
-		#print ("Deleting " + str(me_tweet_id[j]))
-
-
+#/////////// NEEDS TO BE FIXED /////////////
+"""
+        try:
+            api.destroy_favorite(retweets.id)
+        except:
+            print("Failed to Unfavorite")
+"""
 """
 Major Issues:
 
@@ -117,11 +125,7 @@ Twitter account information
 	Password: Rockyisgod28
 """
 
-#search_func("giveaway retweet")
-undo_func()
-
-
-''' 
+'''
 random idea
 
 try to handle situation where tweets say "like: youtube.com/fdaf":
@@ -129,6 +133,6 @@ try to handle situation where tweets say "like: youtube.com/fdaf":
 
 '''
 
-
-search_func("giveaway retweet", 10)
-
+#=================CODE TO RUN THE SCRIPT ========================
+#search_func("giveaway retweet", 50)
+undo_func()
