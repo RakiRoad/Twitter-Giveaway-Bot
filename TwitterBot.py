@@ -3,22 +3,35 @@
 #   Created By: Ralph Quinto and Steve Mattia
 #   Version: 1.0
 #=============================================================================
+#=============================================================================
+#   Features to be implemented:
+#       We need to make the program keep searching for new giveaways so far
+#       only runs a single instance
+#
+#   Major Issues:
+#       Rewrite the undo_follow function
+#
+#   Twitter account information
+#	  Email: redditfreebies28@gmail.com
+#	  Password: Rockyisgod28
+#     user_id = 867029806944309254
+#
+#=============================================================================
 #import libraries
 import tweepy
 import csv
 import threading
-
+import time
 #Twitter API information
-consumer_key = "htxqxkvGwuaxOhBMVKO9EzsAU"
-consumer_secret = "EwKZn7iozu1Iqb7q2BxkrfSL6lrEB9O0hkEJ6BHot7AXdb0bo5"
-access_key = "867029806944309254-pruOV07YS0kG5Z3kFH5OnkE0Pb4vAkU"
-access_secret = "zJql1nnVOpQjMfajPaGBq2Ba6AgTu1o59mzUNGAeS5xzT
+consumer_key = 	"SOkTAHoHprwL0numjECCApGVw"
+consumer_secret = "44VWtmg0oBtq5u1rq97W4BvouKrOkQPaienHm3LsmqdXVgJs05"
+access_key = "867029806944309254-PRCyOXnVmRel0KFFW27eB0Gdg3I3BXo"
+access_secret = "uvC513O208HRLzOyFab5FRIt48o4ew30H5CB1YKlqKadT"
 
 #Authentication Process
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
-api = tweepy.API(auth)
-
+api = tweepy.API(auth_handler=auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 def search_func(value, numTweets):
     search_results = api.search(q=value, count=numTweets)
@@ -61,41 +74,20 @@ def search_func(value, numTweets):
             except Exception:
                 pass
 
-
-# def runSearchOnIntervalMinutes(query, minutes):
-#     seconds = minutes * 60.0
-#     threading.Timer(seconds, search_func).start()
-
-# def runSearchOnIntervalSeconds(query, seconds):
-#     threading.Timer(seconds, search_func).start()
-
-
-
 #///////////////////////////////////////////////////////////
-# Method to unfollow and delete tweets
+# Method to unfollow, delete tweets, and unlike
 #///////////////////////////////////////////////////////////
 
-def undo_func():
+def undo_follow():
 
-    #Finds the owner's id
-    me_user = api.me()
-    me_id = me_user.id
+    for friends in tweepy.Cursor(api.friends).items():
+        try:
+            api.destroy_friendship(friends.id)
+        except:
+            print ("Failed to unfollow")
 
-    #print (me_id)
-    #print ("\n")
-
-    #finds the ids of followings
-    following_list = api.friends_ids(me_id)
-    #print (following_list)
-    #print ("\n")
-    length_follow = len(following_list)
-
-    #iterates through the list of followings and deletes it
-    for i in range(0, length_follow):
-        api.destroy_friendship(following_list[i])
-        #print ("Deleting " + str(following_list[i]))
-
-    #Deletes all of the retweets and unlikes them
+def undo_retweets():
+    #Deletes all of the retweets
     for retweets in tweepy.Cursor(api.user_timeline).items():
         try:
             api.destroy_status(retweets.id)
@@ -103,35 +95,19 @@ def undo_func():
         except:
             print ("Failed to delete:"), retweets.id
 
-        if retweets.favorited:
-            try:
-                api.destroy_favorite(retweets.id)
-            except Exception as e:
-                print("Failed to unfavorite" + str(retweets.id))
-                print(str(e.errno))
+def undo_favorites():
 
-"""
-Major Issues:
+    #undoes all likes
+    for retweets in tweepy.Cursor(api.favorites).items():
 
-Features to be implemented:
-	-We need to make the program keep searching for new giveaways so far only runs a single instance
-	-Add functionality so program automatically retweets, follows, favorite tweet for giveaway
-		-Does retweeting
-		-Does Following
-
-Twitter account information
-	Email: redditfreebies28@gmail.com
-	Password: Rockyisgod28
-"""
-
-'''
-random idea
-
-try to handle situation where tweets say "like: youtube.com/fdaf":
-    if link contains 'youtube' or shortened version, go to youtube with account credentials and like (use youtube api/lib)
-
-'''
+        try:
+            api.destroy_favorite(retweets.id)
+        except Exception as e:
+            print("Failed to unfavorite" + str(retweets.id))
+            print(str(e.errno))
 
 #=================CODE TO RUN THE SCRIPT ========================
-search_func("giveaway retweet", 5)
-#undo_func()
+#search_func("giveaway retweet", 5)
+#undo_follow()
+#undo_retweets()
+#undo_favorites()
