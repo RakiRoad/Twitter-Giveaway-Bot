@@ -33,7 +33,7 @@ def search_func(value, numTweets):
     for i in range(0, length):
         #if we retweeted a tweet that someone else retweeted then use retweeted_status
         #else just use the regular tweet result
-        if search_results[i].retweeted_status is not None:
+        if hasattr(search_results[i], 'retweeted_status'):
             tweet_users.append(search_results[i].retweeted_status.user)
         else:
             #regular user just get search results.user.screen_name
@@ -104,13 +104,13 @@ def undo_func():
         except:
             print ("Failed to delete:"), retweets.id
 
-#/////////// NEEDS TO BE FIXED /////////////
-"""
-        try:
-            api.destroy_favorite(retweets.id)
-        except:
-            print("Failed to Unfavorite")
-"""
+        if retweets.favorited:
+            try:
+                api.destroy_favorite(retweets.id)
+            except Exception as e:
+                print("Failed to unfavorite" + str(retweets.id))
+                print(str(e.errno))
+
 """
 Major Issues:
 
