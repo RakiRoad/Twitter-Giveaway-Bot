@@ -10,10 +10,10 @@ import threading
 
 
 #Twitter API information
-consumer_key = "gsD8iFLqvQDdg22OFAHIhcIx9"
-consumer_secret = "AiNjNSFUXwFRcD5CxFhrNhTNhrBm7ggznhSBhUIiDeXpChw07h"
-access_key = "867029806944309254-Au0d3L1PpESXyyVSjGrqWBUdPOJspIC"
-access_secret = "KRV42V1w9gHBlI4gxMSMtCEVZIp8CFpIG3HmKYT88P7FF"
+consumer_key = "wiC1ZB8wj6d6rGwhL9jMKDmLb"
+consumer_secret = "ov5uyROCQZj4zVndtn39t1QHtCuDvBuS02SzvlIVQxlU9UhprY"
+access_key = "867029806944309254-YItySRFoE4GZGkRDnMSXaTa1VpUzsGm"
+access_secret = "msUko0KKwTD6ymlwOMTf0MInCFGj1xfgRUltUWMCQGLVS"
 
 #Authentication Process
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
