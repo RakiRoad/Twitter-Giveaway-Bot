@@ -9,10 +9,10 @@ import csv
 import threading
 
 #Twitter API information
-consumer_key = "wiC1ZB8wj6d6rGwhL9jMKDmLb"
-consumer_secret = "ov5uyROCQZj4zVndtn39t1QHtCuDvBuS02SzvlIVQxlU9UhprY"
-access_key = "867029806944309254-NmtVbhCbayOtWGO4kMpS8PrgfF5MRCY"
-access_secret = "xKcFPqEbhmdoOHHAjDx8QJ6ODRld5o1PlC8K5Ss1BkDIz"
+consumer_key = "htxqxkvGwuaxOhBMVKO9EzsAU"
+consumer_secret = "EwKZn7iozu1Iqb7q2BxkrfSL6lrEB9O0hkEJ6BHot7AXdb0bo5"
+access_key = "867029806944309254-pruOV07YS0kG5Z3kFH5OnkE0Pb4vAkU"
+access_secret = "zJql1nnVOpQjMfajPaGBq2Ba6AgTu1o59mzUNGAeS5xzT
 
 #Authentication Process
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -133,5 +133,5 @@ try to handle situation where tweets say "like: youtube.com/fdaf":
 '''
 
 #=================CODE TO RUN THE SCRIPT ========================
-search_func("giveaway retweet", 50)
+search_func("giveaway retweet", 5)
 #undo_func()
