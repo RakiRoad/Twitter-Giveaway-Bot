@@ -22,16 +22,21 @@ import tweepy
 import csv
 import threading
 import time
+
 #Twitter API information
-consumer_key = 	"SOkTAHoHprwL0numjECCApGVw"
-consumer_secret = "44VWtmg0oBtq5u1rq97W4BvouKrOkQPaienHm3LsmqdXVgJs05"
-access_key = "867029806944309254-PRCyOXnVmRel0KFFW27eB0Gdg3I3BXo"
-access_secret = "uvC513O208HRLzOyFab5FRIt48o4ew30H5CB1YKlqKadT"
+consumer_key = 	"OktowHbm9dmLa3Oa5MAGU81Yj"
+consumer_secret = "Er0Vod37RiR0KXhkUcxgFld3MxGT8Ykn64YAk7bN1KpbO4d1LK"
+access_key = "867029806944309254-QW7IzbmFnNyihqcbyjAwmPnAUuErBYX"
+access_secret = "TsVDx4wnhZzUmWudXvFjZuzKgtKLXkYwVfmOVAwS5eWW0"
 
 #Authentication Process
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth_handler=auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+#//////////////////////////////////////////////////////////////////////////////
+# Function to Retweet, Like, and Follow Giveaway
+#//////////////////////////////////////////////////////////////////////////////
 
 def search_func(value, numTweets):
     search_results = api.search(q=value, count=numTweets)
@@ -74,40 +79,60 @@ def search_func(value, numTweets):
             except Exception:
                 pass
 
-#///////////////////////////////////////////////////////////
+#//////////////////////////////////////////////////////////////////////////////
 # Method to unfollow, delete tweets, and unlike
-#///////////////////////////////////////////////////////////
+#//////////////////////////////////////////////////////////////////////////////
 
 def undo_follow():
 
+    #unfollows all of your friends
     for friends in tweepy.Cursor(api.friends).items():
+        print ("Removing Follows...")
         try:
             api.destroy_friendship(friends.id)
         except:
             print ("Failed to unfollow")
 
 def undo_retweets():
+
     #Deletes all of the retweets
     for retweets in tweepy.Cursor(api.user_timeline).items():
+        print ("Removing Retweets...")
         try:
             api.destroy_status(retweets.id)
-            #print ("Deleted:"), retweets.id
         except:
-            print ("Failed to delete:"), retweets.id
+            print ("Failed to delete:")
 
 def undo_favorites():
 
     #undoes all likes
     for retweets in tweepy.Cursor(api.favorites).items():
-
+        print ("Removing Favorites...")
         try:
             api.destroy_favorite(retweets.id)
-        except Exception as e:
+        except:
             print("Failed to unfavorite" + str(retweets.id))
-            print(str(e.errno))
 
 #=================CODE TO RUN THE SCRIPT ========================
-#search_func("giveaway retweet", 5)
-#undo_follow()
-#undo_retweets()
-#undo_favorites()
+#search_func("giveaway retweet", 25)
+
+'''
+undo_follow()
+undo_retweets()
+undo_favorites()
+'''
+
+'''
+timer = 0
+
+while timer < 100:
+
+    try:
+        search_func("giveaway retweet", 100)
+        print ("Passthrough: " + str(timer))
+    except tweepy.TweepError:
+        time.sleep(60)
+        continue
+
+    timer +=1
+'''
