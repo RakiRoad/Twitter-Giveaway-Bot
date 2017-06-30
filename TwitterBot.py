@@ -5,16 +5,12 @@
 #=============================================================================
 #=============================================================================
 #   Features to be implemented:
-#       We need to make the program keep searching for new giveaways so far
-#       only runs a single instance
+#
 #
 #   Major Issues:
-#       Rewrite the undo_follow function
+#
 #
 #   Twitter account information
-#	  Email: redditfreebies28@gmail.com
-#	  Password: Rockyisgod28
-#     user_id = 867029806944309254
 #
 #=============================================================================
 #import libraries
@@ -24,10 +20,10 @@ import threading
 import time
 
 #Twitter API information
-consumer_key = 	"OktowHbm9dmLa3Oa5MAGU81Yj"
-consumer_secret = "Er0Vod37RiR0KXhkUcxgFld3MxGT8Ykn64YAk7bN1KpbO4d1LK"
-access_key = "867029806944309254-QW7IzbmFnNyihqcbyjAwmPnAUuErBYX"
-access_secret = "TsVDx4wnhZzUmWudXvFjZuzKgtKLXkYwVfmOVAwS5eWW0"
+consumer_key = 	" "
+consumer_secret = " "
+access_key = " "
+access_secret = " "
 
 #Authentication Process
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -122,17 +118,10 @@ undo_retweets()
 undo_favorites()
 '''
 
-'''
+
 timer = 0
 
-while timer < 100:
-
-    try:
-        search_func("giveaway retweet", 100)
-        print ("Passthrough: " + str(timer))
-    except tweepy.TweepError:
-        time.sleep(60)
-        continue
-
-    timer +=1
-'''
+for i in range (0, 35):
+    print ("Passthrough: " + str(i))
+    search_func("giveaway retweet", 150)
+    time.sleep(60*15)
