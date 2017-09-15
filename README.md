@@ -3,7 +3,7 @@
 
 ![platform](https://img.shields.io/badge/platform-python-brightgreen.svg)
 
-#This Python script automatically enters users to giveaways by searching for the query terms "giveaway" and "retweet"
+This Python script automatically enters users to giveaways by searching for the query terms "giveaway" and "retweet"
 
 ## Features
 - Automatimatically Enter User to Giveaways
