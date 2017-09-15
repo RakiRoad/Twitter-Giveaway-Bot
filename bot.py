@@ -18,12 +18,13 @@ import tweepy
 import csv
 import threading
 import time
+import random
 
 #Twitter API information
-consumer_key = 	" "
-consumer_secret = " "
-access_key = " "
-access_secret = " "
+consumer_key = 	"CONSUMER_KEY"
+consumer_secret = "CONSUMER_SECRET"
+access_key = "ACCESS_KEY"
+access_secret = "ACCESS_SECRET"
 
 #Authentication Process
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -110,18 +111,24 @@ def undo_favorites():
             print("Failed to unfavorite" + str(retweets.id))
 
 #=================CODE TO RUN THE SCRIPT ========================
-#search_func("giveaway retweet", 25)
-
-'''
-undo_follow()
-undo_retweets()
-undo_favorites()
-'''
 
 
-timer = 0
+if __name__ == "__main__":
 
-for i in range (0, 35):
-    print ("Passthrough: " + str(i))
-    search_func("giveaway retweet", 150)
-    time.sleep(60*15)
+    for j in range (0, 5):
+        for i in range (0, 10):
+            print ("Passthrough: " + str(i+1) + " Loop: " + str(j+1))
+            search_func("giveaway retweet", 150)
+            time.sleep(60)
+
+        randx = random.randint(15,35)
+        if j < 5:
+            print("Waiting " + str(randx) + " min...")
+            time.sleep(60*randx)
+        elif j == 5:
+            print("Completed!")
+
+    #=========UNCOMMENT TO UNFOLLOW, UNRETWEET, & UNFAVORITE ===========
+    #undo_follow()
+    #undo_retweets()
+    #undo_favorites()
