@@ -43,6 +43,16 @@ def search_func(value, numTweets):
     length = len(outtweets_id)
 
     tweet_users = []
+    tag_users = []
+
+    #retrieves the screen names of user followers
+    users = tweepy.Cursor(api.followers, screen_name='SCREEN NAME').items(2)
+
+    #stores follower screen names in array
+    for user in users:
+        tag_users.append(user.screen_name)
+    #creates string to be put in status
+    tag_text = '@' + tag_users[0] + ' @' + tag_users[1] 
 
     for i in range(0, length):
         #if we retweeted a tweet that someone else retweeted then use retweeted_status
@@ -52,11 +62,21 @@ def search_func(value, numTweets):
         else:
             #regular user just get search results.user.screen_name
             tweet_users.append(search_results[i].user)
-        try:
-            api.retweet(outtweets_id[i])                #retweet the tweet
-            #print(tweet_users[i].screen_name)
-        except Exception:
-            pass
+        
+        #if 'tag' is in the tweet then it will tag 2 followers onto the original tweet as a reply
+        if 'TAG' in (search_results[i].text.upper()):
+            try:
+                api.update_status(tag_text, outtweets_id[i])
+                api.retweet(outtweets_id[i])                #retweet the tweet
+                #print(tweet_users[i].screen_name)
+            except Exception:
+                pass
+        else:
+            try:
+                api.retweet(outtweets_id[i])                #retweet the tweet
+                #print(tweet_users[i].screen_name)
+            except Exception:
+                pass
 
         #if 'follow' is in the tweet, follow that user, of course fails if
         #the word 'follow' is there for other reasons or the tweet uses more letters

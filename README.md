@@ -1,6 +1,5 @@
 # Twitter-Giveaway-Scraper
 
-
 ![platform](https://img.shields.io/badge/platform-python-brightgreen.svg)
 
 This Python script automatically enters users to giveaways by searching for the query terms "giveaway" and "retweet"
@@ -10,6 +9,7 @@ This Python script automatically enters users to giveaways by searching for the 
 - Undo Follow function
 - Undo Retweet function
 - Undo Favorite function
+- Tag friends if specified in giveaways
 
 ## Requirements
 - Python 3.0+
@@ -20,8 +20,7 @@ This Python script automatically enters users to giveaways by searching for the 
 2. There is a cap of 1000 follows per day. Must unfollow if cap is reached
 
 ## Future Features
-1. Ability to Tag Friends when entering giveaways.
-2. Automate unfollow when cap limit is reached.
+1. Automate unfollow when cap limit is reached.
 
 ## License
 
