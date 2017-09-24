@@ -28,13 +28,13 @@ access_secret = "ACCESS_SECRET"
 ```
 3. The script will automatically terminate after it operates through 7500 tweets
 ## Usage
-`To run giveaway`
+**To run giveaway:**
 1. Edit query term to search for or leave the default 'giveaway retweet'
 2. Open Terminal and CD into repository directory
 3. Type *python bot.py*
 4. Operation ends after it operates through 7500 tweets
 
-`To run the "un" functions`
+**To run the "un" functions:**
 1. Comment out all the code within the nested for loops
 2. Uncomment
 ```python
