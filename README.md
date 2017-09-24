@@ -1,6 +1,13 @@
 # Twitter-Giveaway-Scraper
-
-![platform](https://img.shields.io/badge/platform-python-brightgreen.svg)
+<a>
+    <img src="https://img.shields.io/badge/Language-Python-brightgreen.svgg"/>
+</a>
+<a>
+    <img src="https://img.shields.io/badge/Release-V1.1-blue.svg"/>
+</a>
+<a href="https://opensource.org/licenses/MIT">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" />
+</a>
 
 This Python script automatically enters users to giveaways by searching for the query terms "giveaway" and "retweet"
 
