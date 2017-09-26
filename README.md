@@ -1,6 +1,6 @@
 # Twitter-Giveaway-Scraper
 
-![](https://img.shields.io/badge/Language-Python-brightgreen.svg) ![](https://img.shields.io/badge/Release-V1.1-blue.svg) ![](https://img.shields.io/badge/License-MIT-yellow.svg)
+![](https://img.shields.io/badge/Language-Python-brightgreen.svg) ![](https://img.shields.io/badge/Release-V1.1-blue.svg) ![](https://img.shields.io/badge/License-MIT-orange.svg)
 
 This Python script automatically enters users to giveaways by searching for the query terms "giveaway" and "retweet". This project was inspired by a Reddit post created a while back detailing a script that also entered the user to giveaways on Twitter. Seeing upon how successful the user was at winning, I decided to create my own version using Python and the Tweepy package.
 
