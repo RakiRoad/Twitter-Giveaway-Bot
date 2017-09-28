@@ -1,4 +1,4 @@
-# Twitter-Giveaway-Scraper
+# Twitter-Giveaway-Bot
 
 ![](https://img.shields.io/badge/Language-Python-brightgreen.svg) ![](https://img.shields.io/badge/Release-V1.1-blue.svg) ![](https://img.shields.io/badge/License-MIT-orange.svg)
 
